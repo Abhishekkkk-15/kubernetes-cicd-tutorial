@@ -33,21 +33,21 @@ jobs:
             ghcr.io/abhishekkkk-15/kubernetes-cicd-tutorial:latest
             ghcr.io/abhishekkkk-15/kubernetes-cicd-tutorial:${{ github.sha }}
       - name: Update GitOps repository
-        shell: bash
+        shell: pwsh
         env:
           GIT_TOKEN: ${{ secrets.GITOPS_PAT }}
         run: |
           git config --global credential.helper store
-          echo "https://${GIT_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
+          Set-Content -Path "$env:USERPROFILE\.git-credentials" -Value "https://${env:GIT_TOKEN}:x-oauth-basic@github.com"
 
-          rm -rf gitops
+          Remove-Item -Recurse -Force gitops -ErrorAction SilentlyContinue
           git clone https://github.com/abhishekkkk-15/grade-api-gitops.git gitops
-          cd gitops
+          Set-Location gitops
 
-          sed -i "s|image: ghcr.io/.*|image: ghcr.io/${{ steps.repo.outputs.value }}:${{ github.sha }}|g" deployment.yaml
+          (Get-Content deployment.yaml) -replace 'image: ghcr.io/.*', 'image: ghcr.io/${{ steps.repo.outputs.value }}:${{ github.sha }}' | Set-Content deployment.yaml
 
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add deployment.yaml
           git commit -m "Update image to ${{ github.sha }}"
-          git push -f https://${GIT_TOKEN}@github.com/abhishekkkk-15/grade-api-gitops.git main
+          git push -f https://${env:GIT_TOKEN}@github.com/abhishekkkk-15/grade-api-gitops.git main
