@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           lower_repo=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
-          echo "value=$lower_repo" >> "$GITHUB_OUTPUT"
+          echo "value=$lower_repo" > $GITHUB_OUTPUT
 
 
       - name: Build and push Docker image
