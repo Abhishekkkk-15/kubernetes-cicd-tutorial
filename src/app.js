@@ -12,6 +12,12 @@ let grades = [
     name:"abhishek",
     subject:"CS",
     score:"1000"
+  },
+  {
+    id:"12345",
+    name:"Jhon",
+    subject:"CS",
+    score:"2000"
   }
 ];
 
