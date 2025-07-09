@@ -26,6 +26,7 @@ jobs:
 
       - name: Set lowercase repo name
         id: repo
+        shell: bash
         run: |
           lower_repo=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
           echo "value=$lower_repo" >> "$GITHUB_OUTPUT"
