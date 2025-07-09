@@ -24,23 +24,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Set lowercase repo name
-        id: repo
-        shell: bash
-        run: |
-          lower_repo=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
-          echo "value=$lower_repo" > $GITHUB_OUTPUT
-
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ steps.repo.outputs.value }}:latest
-            ghcr.io/${{ steps.repo.outputs.value }}:${{ github.sha }}
-
+            ghcr.io/abhishekkkk-15/kubernetes-cicd-tutorial:latest
+            ghcr.io/abhishekkkk-15/kubernetes-cicd-tutorial:${{ github.sha }}
       - name: Update GitOps repository
         shell: bash
         env:
