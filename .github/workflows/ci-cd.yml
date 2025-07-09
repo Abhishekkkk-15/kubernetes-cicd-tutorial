@@ -27,10 +27,9 @@ jobs:
       - name: Set lowercase repo name
         id: repo
         run: |
-          echo "value=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+          lower_repo=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
+          echo "value=$lower_repo" >> "$GITHUB_OUTPUT"
 
-      - name: Debug tag
-        run: echo "Docker tag will be: ghcr.io/${{ steps.repo.outputs.value }}:latest"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
