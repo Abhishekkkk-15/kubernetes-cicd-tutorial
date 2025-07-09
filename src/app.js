@@ -8,11 +8,6 @@ app.use(cors());
 
 let grades = [];
 
-app.get('/', (req, res) => {
-  console.log('hey there');
-  res.json({msg:"hey there"})
-});
-
 app.get('/grades', (req, res) => {
   console.log('Received GET request for grades');
   res.json(grades);
