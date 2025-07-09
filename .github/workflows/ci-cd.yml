@@ -45,7 +45,7 @@ jobs:
           Set-Location gitops
 
           $file = Get-Content deployment.yaml
-          $updated = $file -replace 'image: ghcr.io/.*', 'image: ghcr.io/${{ steps.repo.outputs.value }}:${{ github.sha }}'
+          $updated = $file -replace 'image: ghcr.io/.*', 'image: ghcr.io/abhishekkkk-15/kubernetes-cicd-tutorial:${{ github.sha }}'
           $updated | Set-Content deployment.yaml
 
           git config --global user.name "GitHub Actions"
